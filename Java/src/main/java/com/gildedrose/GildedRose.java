@@ -63,11 +63,13 @@ class GildedRose {
     }
 
     private int downgradeQuality(Item item) {
+        int lossOfQuality = item.sellIn < 0 ? 2 : 1;
+
         if (isSulfuras(item) || isAgedBrie(item)) {
             return item.quality;
         }
 
-        if (isBackstagePass(item) && item.sellIn == 0) {
+        if (isBackstagePass(item) && item.sellIn < 0) {
             return 0;
         }
 
