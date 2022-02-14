@@ -10,19 +10,10 @@ class GildedRose {
     public void updateQuality() {
         for (Item item : items) {
             decreaseSellIn(item);
-
-            if (!isAgedBrie(item)
-                && !isBackstagePass(item)) {
-                        item.quality = downgradeQuality(item);
-            } else {
-                    item.quality = increaseQuality(item);
-
-                    if (isBackstagePass(item)) {
-                        if (item.sellIn < 11) {
-                                item.quality = increaseQuality(item);
-                        }
-                    }
+            if (isBackstagePass(item) || isAgedBrie(item)) {
+                item.quality =  increaseQuality(item);
             }
+            item.quality =  downgradeQuality(item);
         }
     }
 
@@ -45,7 +36,19 @@ class GildedRose {
     }
 
     private int increaseQuality(Item item) {
-        int value = isAgedBrie(item) && item.sellIn < 0 ? 2 : 1;
+        boolean brieIsAged = isAgedBrie(item) && item.sellIn < 0;
+        boolean ticketsAreInDemand = isBackstagePass(item) && item.sellIn < 11;
+        boolean tickersAreInSuperDemand = isBackstagePass(item) && item.sellIn < 6 && item.sellIn > 0;
+
+
+        int value = 1;
+        if (brieIsAged || ticketsAreInDemand) {
+            value = 2;
+        }
+        if (tickersAreInSuperDemand) {
+            value = 3;
+        }
+
        int qualityMaximum = isSulfuras(item) ? 80 : 50;
 
        return Integer.min(qualityMaximum, item.quality + value);
@@ -58,8 +61,8 @@ class GildedRose {
             return item.quality;
         }
 
-        if (isBackstagePass(item) && item.sellIn < 0) {
-            return 0;
+        if (isBackstagePass(item)) {
+            return item.sellIn < 0 ? 0 : item.quality;
         }
 
         return Integer.max(0, item.quality - lossOfQuality);
