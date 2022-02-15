@@ -47,7 +47,7 @@ class GildedRose {
 
     private int calculateQualityIncrease(Item item) {
         boolean brieIsAged = isAgedBrie(item) && itemIsExpired(item);
-        boolean ticketsAreInDemand = isBackstagePass(item) && item.sellIn < 11;
+        boolean ticketsAreInDemand = isBackstagePass(item) && item.sellIn < 11 && !itemIsExpired(item);
         boolean ticketsAreInSuperDemand = isBackstagePass(item) && item.sellIn < 6 && !itemIsExpired(item);
 
         int increaseQualityBy = 1;
