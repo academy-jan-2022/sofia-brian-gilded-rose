@@ -109,13 +109,16 @@ class GildedRoseTest {
         StringBuilder result = new StringBuilder();
 
         IntStream.range(0, 3).forEach(i -> {
-            result.append("-------- day ").append(i).append(" --------");
-            result.append("\n");
-            result.append("name, sellIn, quality");
-            result.append("\n");
+            result
+                .append("-------- day ")
+                .append(i)
+                .append(" --------")
+                .append("\n")
+                .append("name, sellIn, quality")
+                .append("\n");
             for (Item item : items) {
-                result.append(item);
-                result.append("\n");
+                result.append(item)
+                    .append("\n");
             }
             result.append("\n");
             app.updateQuality();
