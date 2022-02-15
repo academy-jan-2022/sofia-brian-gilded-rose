@@ -85,7 +85,7 @@ class GildedRoseTest {
         assertEquals(0, lessThanFiveDaysBackstagePass.quality);
 
         Item conjured = app.items[8];
-        assertEquals(2, lessThanFiveDaysBackstagePass.sellIn);
-        assertEquals(4, lessThanFiveDaysBackstagePass.quality);
+        assertEquals(2, conjured.sellIn);
+        assertEquals(4, conjured.quality);
     }
 }
