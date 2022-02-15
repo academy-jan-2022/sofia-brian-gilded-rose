@@ -29,6 +29,10 @@ class GildedRose {
        return item.name.equals("Sulfuras, Hand of Ragnaros");
     }
 
+    private boolean isConjured(Item item) {
+       return item.name.contains("Conjured");
+    }
+
     private void decreaseSellIn(Item item) {
         if (!isSulfuras(item)) {
             item.sellIn = item.sellIn - 1;
@@ -64,6 +68,10 @@ class GildedRose {
 
         if (isBackstagePass(item)) {
             return item.sellIn < 0 ? 0 : item.quality;
+        }
+
+        if(isConjured(item)) {
+            lossOfQuality *= 2;
         }
 
         return Integer.max(0, item.quality - lossOfQuality);
