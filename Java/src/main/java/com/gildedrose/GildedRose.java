@@ -50,7 +50,7 @@ class GildedRose {
             increaseQualityBy = 3;
         }
 
-       int qualityMaximum = isSulfuras(item) ? 80 : 50;
+       int qualityMaximum = 50;
 
        return Integer.min(qualityMaximum, item.quality + increaseQualityBy);
     }
