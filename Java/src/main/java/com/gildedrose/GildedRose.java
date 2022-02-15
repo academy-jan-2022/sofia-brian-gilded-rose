@@ -30,7 +30,7 @@ class GildedRose {
     }
 
     private void decreaseSellIn(Item item) {
-        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+        if (!isSulfuras(item)) {
             item.sellIn = item.sellIn - 1;
         }
     }
@@ -38,20 +38,21 @@ class GildedRose {
     private int increaseQuality(Item item) {
         boolean brieIsAged = isAgedBrie(item) && item.sellIn < 0;
         boolean ticketsAreInDemand = isBackstagePass(item) && item.sellIn < 11;
-        boolean tickersAreInSuperDemand = isBackstagePass(item) && item.sellIn < 6 && item.sellIn > 0;
+        boolean ticketsAreInSuperDemand = isBackstagePass(item) && item.sellIn < 6 && item.sellIn > 0;
 
+        int increaseQualityBy = 1;
 
-        int value = 1;
         if (brieIsAged || ticketsAreInDemand) {
-            value = 2;
+            increaseQualityBy = 2;
         }
-        if (tickersAreInSuperDemand) {
-            value = 3;
+
+        if (ticketsAreInSuperDemand) {
+            increaseQualityBy = 3;
         }
 
        int qualityMaximum = isSulfuras(item) ? 80 : 50;
 
-       return Integer.min(qualityMaximum, item.quality + value);
+       return Integer.min(qualityMaximum, item.quality + increaseQualityBy);
     }
 
     private int downgradeQuality(Item item) {
