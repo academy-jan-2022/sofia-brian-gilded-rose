@@ -48,7 +48,7 @@ class GildedRose {
     private int calculateQualityIncrease(Item item) {
         boolean brieIsAged = isAgedBrie(item) && itemIsExpired(item);
         boolean ticketsAreInDemand = isBackstagePass(item) && item.sellIn < 11;
-        boolean ticketsAreInSuperDemand = isBackstagePass(item) && item.sellIn < 6 && item.sellIn > 0;
+        boolean ticketsAreInSuperDemand = isBackstagePass(item) && item.sellIn < 6 && !itemIsExpired(item);
 
         int increaseQualityBy = 1;
 
@@ -71,11 +71,13 @@ class GildedRose {
             return item.quality;
         }
 
+        int minimumQuality = 0;
+
         if (isBackstagePass(item)) {
-            return itemIsExpired(item) ? 0 : item.quality;
+            return itemIsExpired(item) ? minimumQuality : item.quality;
         }
 
-        return Integer.max(0, item.quality - calculateQualityLoss(item));
+        return Integer.max(minimumQuality, item.quality - calculateQualityLoss(item));
     }
 
     private int calculateQualityLoss(Item item) {
